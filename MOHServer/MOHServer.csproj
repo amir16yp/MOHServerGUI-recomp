@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <ProjectGuid>{E4DD2517-F1C8-413B-9101-981CE734808C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MOHServer</RootNamespace>
+    <AssemblyName>MOHServer</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <FileAlignment>4096</FileAlignment>
+    <TargetFramework>net20</TargetFramework>
+    <UseWindowsForms>True</UseWindowsForms>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableDefaultItems>False</EnableDefaultItems>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>MOHServer_32512.ico</ApplicationIcon>
+    <StartupObject>MOHServer.frmMain</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AlreadyRunningException.cs" />
+    <Compile Include="AsyncOperation.cs" />
+    <Compile Include="DataReceivedEventArgs.cs" />
+    <Compile Include="DataReceivedHandler.cs" />
+    <Compile Include="frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAcctSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAcctSettings.Designer.cs">
+      <DependentUpon>frmAcctSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmGameCreation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGameCreation.Designer.cs">
+      <DependentUpon>frmGameCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMapList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMapList.Designer.cs">
+      <DependentUpon>frmMapList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmServerSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmServerSettings.Designer.cs">
+      <DependentUpon>frmServerSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListViewColumnSorter.cs" />
+    <Compile Include="MapRegistry.cs" />
+    <Compile Include="ProcessStarter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerLogHandler.cs" />
+    <Compile Include="Text\Database.Designer.cs">
+      <DependentUpon>Database.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MOHServer_32512.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAcctSettings.resx">
+      <DependentUpon>frmAcctSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGameCreation.resx">
+      <DependentUpon>frmGameCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMapList.resx">
+      <DependentUpon>frmMapList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmServerSettings.resx">
+      <DependentUpon>frmServerSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="stats.xsd" />
+    <EmbeddedResource Include="Text\Database.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Database.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+</Project>

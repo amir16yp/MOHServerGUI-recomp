@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CMN_AboutTitle" xml:space="preserve">
+    <value>About MOH Server</value>
+  </data>
+  <data name="CMN_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="CMN_AccountSettings" xml:space="preserve">
+    <value>Account Settings</value>
+  </data>
+  <data name="CMN_AdminPwd" xml:space="preserve">
+    <value>Administrator Password</value>
+  </data>
+  <data name="CMN_AdminServer" xml:space="preserve">
+    <value>Administrated server</value>
+  </data>
+  <data name="CMN_AdminSettings" xml:space="preserve">
+    <value>Administration settings</value>
+  </data>
+  <data name="CMN_AimAssist" xml:space="preserve">
+    <value>Aim Assist</value>
+  </data>
+  <data name="CMN_BLLimit" xml:space="preserve">
+    <value>Battle Lines Limit</value>
+  </data>
+  <data name="CMN_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CMN_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="CMN_CopyRight" xml:space="preserve">
+    <value>© 2006 Electronic Arts Canada. All Rights Reserved.</value>
+  </data>
+  <data name="CMN_DMLimit" xml:space="preserve">
+    <value>Deathmatch Limit</value>
+  </data>
+  <data name="CMN_Deaths" xml:space="preserve">
+    <value>Deaths</value>
+  </data>
+  <data name="CMN_DedicatedServer" xml:space="preserve">
+    <value>Dedicated Server</value>
+  </data>
+  <data name="CMN_Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="CMN_Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="CMN_FailedToStart" xml:space="preserve">
+    <value>Failed to start server: {0}</value>
+  </data>
+  <data name="CMN_FileNotExist" xml:space="preserve">
+    <value>File does not exist: {0}</value>
+  </data>
+  <data name="CMN_FriendlyFire" xml:space="preserve">
+    <value>Friendly Fire</value>
+  </data>
+  <data name="CMN_GameCreationSettings" xml:space="preserve">
+    <value>Game Creation Settings</value>
+  </data>
+  <data name="CMN_GameMode" xml:space="preserve">
+    <value>Game Mode</value>
+  </data>
+  <data name="CMN_GameName" xml:space="preserve">
+    <value>Game Name</value>
+  </data>
+  <data name="CMN_GoEx" xml:space="preserve">
+    <value>GO!</value>
+  </data>
+  <data name="CMN_HTLLimit" xml:space="preserve">
+    <value>Hold the Line Limit</value>
+  </data>
+  <data name="CMN_INFLimit" xml:space="preserve">
+    <value>Infiltration Limit</value>
+  </data>
+  <data name="CMN_Infinite" xml:space="preserve">
+    <value>Infinite</value>
+  </data>
+  <data name="CMN_Kills" xml:space="preserve">
+    <value>Kills</value>
+  </data>
+  <data name="CMN_Leaderboard" xml:space="preserve">
+    <value>Leaderboard</value>
+  </data>
+  <data name="CMN_LogToolTip" xml:space="preserve">
+    <value>Error and information output from the server</value>
+  </data>
+  <data name="CMN_MapName" xml:space="preserve">
+    <value>Map Name</value>
+  </data>
+  <data name="CMN_MapSelection" xml:space="preserve">
+    <value>Map Selection</value>
+  </data>
+  <data name="CMN_MaxPlayers" xml:space="preserve">
+    <value>Max Players</value>
+  </data>
+  <data name="CMN_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CMN_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CMN_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="CMN_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="CMN_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="CMN_Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="CMN_PwdOpts" xml:space="preserve">
+    <value>Password Options</value>
+  </data>
+  <data name="CMN_PwdProtected" xml:space="preserve">
+    <value>Password Protected</value>
+  </data>
+  <data name="CMN_Ranked" xml:space="preserve">
+    <value>Ranked</value>
+  </data>
+  <data name="CMN_Reflect" xml:space="preserve">
+    <value>Reflect</value>
+  </data>
+  <data name="CMN_RoundsPerMap" xml:space="preserve">
+    <value>Rounds Per Map</value>
+  </data>
+  <data name="CMN_Score" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="CMN_ServerExited" xml:space="preserve">
+    <value>Server Exited</value>
+  </data>
+  <data name="CMN_ServerLog" xml:space="preserve">
+    <value>Server Log</value>
+  </data>
+  <data name="CMN_ServerSettings" xml:space="preserve">
+    <value>Server Settings</value>
+  </data>
+  <data name="CMN_ServerStopped" xml:space="preserve">
+    <value>Server Stopped</value>
+  </data>
+  <data name="CMN_StartingServer" xml:space="preserve">
+    <value>Starting Server...</value>
+  </data>
+  <data name="CMN_StatsToolTip" xml:space="preserve">
+    <value>Live leaderboard stats table</value>
+  </data>
+  <data name="CMN_StopEx" xml:space="preserve">
+    <value>STOP!</value>
+  </data>
+  <data name="CMN_StoppingServer" xml:space="preserve">
+    <value>Stopping Server...</value>
+  </data>
+  <data name="CMN_TimeLimit" xml:space="preserve">
+    <value>Round Time Limit</value>
+  </data>
+  <data name="CMN_Title" xml:space="preserve">
+    <value>MOH Server</value>
+  </data>
+  <data name="CMN_TitleRunning" xml:space="preserve">
+    <value>MOH Server (running)</value>
+  </data>
+  <data name="ERR_GameName" xml:space="preserve">
+    <value>A game name is required.</value>
+  </data>
+  <data name="ERR_GameNameInvalidChar" xml:space="preserve">
+    <value>Game Name contains an invalid character.</value>
+  </data>
+  <data name="ERR_GameNameLong" xml:space="preserve">
+    <value>Game Name is too long.</value>
+  </data>
+  <data name="ERR_Passwd12" xml:space="preserve">
+    <value>Password must be less than 12 characters in length.</value>
+  </data>
+  <data name="ERR_Passwd16" xml:space="preserve">
+    <value>Must be less than 16 characters in length.</value>
+  </data>
+  <data name="ERR_Passwd3" xml:space="preserve">
+    <value>Password must be at least 3 characters in length.</value>
+  </data>
+  <data name="ERR_Passwd4" xml:space="preserve">
+    <value>Must be at least 4 characters in length.</value>
+  </data>
+  <data name="ERR_PortRange" xml:space="preserve">
+    <value>The port must be between {0} and {1}.</value>
+  </data>
+  <data name="ERR_PortRequired" xml:space="preserve">
+    <value>A port is required.</value>
+  </data>
+  <data name="ERR_SelectValidItem" xml:space="preserve">
+    <value>Please select a valid item.</value>
+  </data>
+  <data name="GM_Battle_Lines" xml:space="preserve">
+    <value>Battle Lines</value>
+  </data>
+  <data name="GM_Deathmatch" xml:space="preserve">
+    <value>Deathmatch</value>
+  </data>
+  <data name="GM_Demolition" xml:space="preserve">
+    <value>Demolition</value>
+  </data>
+  <data name="GM_Domination" xml:space="preserve">
+    <value>Domination</value>
+  </data>
+  <data name="GM_Hold_the_Line" xml:space="preserve">
+    <value>Hold the Line</value>
+  </data>
+  <data name="GM_Infiltration" xml:space="preserve">
+    <value>Infiltration</value>
+  </data>
+  <data name="MAP_115" xml:space="preserve">
+    <value>Italy City</value>
+  </data>
+  <data name="MAP_124" xml:space="preserve">
+    <value>Italy Mt Village</value>
+  </data>
+  <data name="MAP_131" xml:space="preserve">
+    <value>Italy Beach</value>
+  </data>
+  <data name="MAP_132" xml:space="preserve">
+    <value>Italy Airfield</value>
+  </data>
+  <data name="MAP_153" xml:space="preserve">
+    <value>Italy Mt Village Night</value>
+  </data>
+  <data name="MAP_181" xml:space="preserve">
+    <value>Italy Beach</value>
+  </data>
+  <data name="MAP_182" xml:space="preserve">
+    <value>Italy Airfield</value>
+  </data>
+  <data name="MAP_183" xml:space="preserve">
+    <value>Italy Mt Village Night</value>
+  </data>
+  <data name="MAP_184" xml:space="preserve">
+    <value>Italy Mt Village</value>
+  </data>
+  <data name="MAP_185" xml:space="preserve">
+    <value>Italy City</value>
+  </data>
+  <data name="MAP_211" xml:space="preserve">
+    <value>Holland City</value>
+  </data>
+  <data name="MAP_216" xml:space="preserve">
+    <value>Holland Bridge Night</value>
+  </data>
+  <data name="MAP_222" xml:space="preserve">
+    <value>Holland Street</value>
+  </data>
+  <data name="MAP_245" xml:space="preserve">
+    <value>Holland Bridge</value>
+  </data>
+  <data name="MAP_281" xml:space="preserve">
+    <value>Holland City</value>
+  </data>
+  <data name="MAP_282" xml:space="preserve">
+    <value>Holland Street</value>
+  </data>
+  <data name="MAP_283" xml:space="preserve">
+    <value>Holland Church</value>
+  </data>
+  <data name="MAP_285" xml:space="preserve">
+    <value>Holland Bridge</value>
+  </data>
+  <data name="MAP_286" xml:space="preserve">
+    <value>Holland Bridge Night</value>
+  </data>
+  <data name="MAP_324" xml:space="preserve">
+    <value>Belgium Forest</value>
+  </data>
+  <data name="MAP_336" xml:space="preserve">
+    <value>Belgium Castle</value>
+  </data>
+  <data name="MAP_341" xml:space="preserve">
+    <value>Belgium River</value>
+  </data>
+  <data name="MAP_352" xml:space="preserve">
+    <value>Belgium Ranch</value>
+  </data>
+  <data name="MAP_381" xml:space="preserve">
+    <value>Belgium River</value>
+  </data>
+  <data name="MAP_382" xml:space="preserve">
+    <value>Belgium Ranch</value>
+  </data>
+  <data name="MAP_383" xml:space="preserve">
+    <value>Belgium River</value>
+  </data>
+  <data name="MAP_384" xml:space="preserve">
+    <value>Belgium Forest</value>
+  </data>
+  <data name="MAP_386" xml:space="preserve">
+    <value>Belgium Castle</value>
+  </data>
+  <data name="MNU_About" xml:space="preserve">
+    <value>&amp;About</value>
+  </data>
+  <data name="MNU_AccountSettings" xml:space="preserve">
+    <value>&amp;Account Settings...</value>
+  </data>
+  <data name="MNU_Clear" xml:space="preserve">
+    <value>C&amp;lear</value>
+  </data>
+  <data name="MNU_Copy" xml:space="preserve">
+    <value>&amp;Copy</value>
+  </data>
+  <data name="MNU_Edit" xml:space="preserve">
+    <value>&amp;Edit</value>
+  </data>
+  <data name="MNU_Exit" xml:space="preserve">
+    <value>E&amp;xit</value>
+  </data>
+  <data name="MNU_GameCreateSettings" xml:space="preserve">
+    <value>&amp;Game Creation Settings...</value>
+  </data>
+  <data name="MNU_Help" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="MNU_MapList" xml:space="preserve">
+    <value>&amp;Map List...</value>
+  </data>
+  <data name="MNU_ServerSettings" xml:space="preserve">
+    <value>&amp;Server Settings...</value>
+  </data>
+  <data name="MNU_Settings" xml:space="preserve">
+    <value>&amp;Settings</value>
+  </data>
+  <data name="MNU_Show" xml:space="preserve">
+    <value>&amp;Show</value>
+  </data>
+</root>
