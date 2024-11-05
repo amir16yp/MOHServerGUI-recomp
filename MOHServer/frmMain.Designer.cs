@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MOHServer
@@ -16,6 +17,10 @@ namespace MOHServer
 			this.notifyIcon.Dispose();
 			base.Dispose(disposing);
 		}
+
+        private UPnPPortMapper portMapper;
+
+
 
 		// Token: 0x06000065 RID: 101 RVA: 0x000052E4 File Offset: 0x000042E4
 		private void InitializeComponent()
@@ -55,6 +60,7 @@ namespace MOHServer
             this.colDeaths = new System.Windows.Forms.DataGridTextBoxColumn();
             this.colScore = new System.Windows.Forms.DataGridTextBoxColumn();
             this.menuItemEAServerMode = new MenuItem();
+
             this.menuItemEAServerMode.Text = "EA Server Mode";
             this.menuItemEAServerMode.Click += MenuItemEAServerMode_Click;
             this.tabCntrl.SuspendLayout();
@@ -123,9 +129,16 @@ namespace MOHServer
             this.menuItemSettings,
             this.menuItemEdit,
             this.menuItemHelp});
+
+
+            menuItemUPNPAttempt = new MenuItem();
+            menuItemUPNPAttempt.Text = "UPnP Port-Forward";
+            menuItemUPNPAttempt.Click += AttemptUPNP;
+
             // 
             // menuItemSettings
             // 
+
             this.menuItemSettings.Index = 0;
             this.menuItemSettings.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemAcctSettings,
@@ -133,7 +146,8 @@ namespace MOHServer
             this.menuItemMapList,
             this.menuItemServerSettings,
             this.menuItemAutoRestart,
-            this.menuItemEAServerMode
+            this.menuItemEAServerMode,
+            this.menuItemUPNPAttempt,
             });
             this.menuItemSettings.Text = "Settings";
             // 
@@ -344,6 +358,32 @@ namespace MOHServer
 
 		}
 
+        private void AttemptUPNP(object sender, EventArgs e)
+        {
+            if (portMapper == null)
+            {
+                portMapper = new UPnPPortMapper();
+            }
+
+            portMapper.Initialize();
+
+            int second_port = this.m_port + 30;
+            bool success1 = portMapper.AddPortMapping(this.m_port, this.m_port, "TCP", "MOHH Game Server");
+            bool success2 = portMapper.AddPortMapping(second_port, this.m_port + 30, "TCP", "MOHH Game Server");
+
+            WriteStreamInfo("Attempted to port forward " + this.m_port + " and " + second_port, Color.DarkOliveGreen, FontStyle.Bold);
+
+            string portMappingList = "Current port mappings:\n";
+            foreach (UPnPPortMapper.PortMapping portMapping in portMapper.GetPortMappings())
+            {
+                portMappingList += portMapping.ToString();
+            }
+
+            WriteStreamInfo(portMappingList, Color.DarkGreen, FontStyle.Regular);
+
+
+        }
+
         private void MenuItemEAServerMode_Click(object sender, EventArgs e)
         {
             this.m_easerver = !m_easerver;
@@ -454,5 +494,6 @@ namespace MOHServer
 
 		// Token: 0x0400007C RID: 124
 		private global::System.Windows.Forms.DataGrid gridLeaderboard;
+        private MenuItem menuItemUPNPAttempt;
     }
 }

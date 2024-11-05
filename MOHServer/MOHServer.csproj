@@ -68,6 +68,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="UPnPPortMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MOHServer_32512.ico" />

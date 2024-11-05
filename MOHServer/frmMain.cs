@@ -14,10 +14,14 @@ using MOHServer.Text;
 
 namespace MOHServer
 {
+
+
+
 	// Token: 0x0200000B RID: 11
 	public partial class frmMain : Form
 	{
-		// Token: 0x06000063 RID: 99 RVA: 0x000051A8 File Offset: 0x000041A8
+        public static ServerLogHandler m_logHandler = new ServerLogHandler();
+
 		public frmMain()
 		{
 			this.InitializeComponent();
@@ -32,7 +36,6 @@ namespace MOHServer
 			this.m_statsFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.LastAccess;
 			this.m_statsFileWatcher.Changed += this.StatsChanged;
 			this.m_statsFileWatcher.EnableRaisingEvents = true;
-            m_logHandler = new ServerLogHandler();
             this.m_statsUpdateThreadExec = new ThreadStart(this.UpdateStats);
 			this.m_statsUpdateInvoker = new frmMain.StatsUpdateDelegate(this.BindStatsToDataGrid);
 			this.m_selectedMaps = new ArrayList();
@@ -41,7 +44,6 @@ namespace MOHServer
 
 		}
 
-        private ServerLogHandler m_logHandler;
 
 
         // Token: 0x06000066 RID: 102 RVA: 0x00005F7C File Offset: 0x00004F7C
