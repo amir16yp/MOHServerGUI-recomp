@@ -40,6 +40,8 @@ namespace MOHServer
             this.menuItemMapList = new System.Windows.Forms.MenuItem();
             this.menuItemServerSettings = new System.Windows.Forms.MenuItem();
             this.menuItemAutoRestart = new System.Windows.Forms.MenuItem();
+            this.menuItemEAServerMode = new System.Windows.Forms.MenuItem();
+            this.menuItemUPNPAttempt = new System.Windows.Forms.MenuItem();
             this.menuItemEdit = new System.Windows.Forms.MenuItem();
             this.menuItemEditCopy = new System.Windows.Forms.MenuItem();
             this.menuItemEditClear = new System.Windows.Forms.MenuItem();
@@ -59,10 +61,6 @@ namespace MOHServer
             this.colKills = new System.Windows.Forms.DataGridTextBoxColumn();
             this.colDeaths = new System.Windows.Forms.DataGridTextBoxColumn();
             this.colScore = new System.Windows.Forms.DataGridTextBoxColumn();
-            this.menuItemEAServerMode = new MenuItem();
-
-            this.menuItemEAServerMode.Text = "EA Server Mode";
-            this.menuItemEAServerMode.Click += MenuItemEAServerMode_Click;
             this.tabCntrl.SuspendLayout();
             this.tabPgLog.SuspendLayout();
             this.tabPgStats.SuspendLayout();
@@ -129,16 +127,9 @@ namespace MOHServer
             this.menuItemSettings,
             this.menuItemEdit,
             this.menuItemHelp});
-
-
-            menuItemUPNPAttempt = new MenuItem();
-            menuItemUPNPAttempt.Text = "UPnP Port-Forward";
-            menuItemUPNPAttempt.Click += AttemptUPNP;
-
             // 
             // menuItemSettings
             // 
-
             this.menuItemSettings.Index = 0;
             this.menuItemSettings.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemAcctSettings,
@@ -147,8 +138,7 @@ namespace MOHServer
             this.menuItemServerSettings,
             this.menuItemAutoRestart,
             this.menuItemEAServerMode,
-            this.menuItemUPNPAttempt,
-            });
+            this.menuItemUPNPAttempt});
             this.menuItemSettings.Text = "Settings";
             // 
             // menuItemAcctSettings
@@ -175,10 +165,22 @@ namespace MOHServer
             this.menuItemServerSettings.Text = "Server Settings...";
             this.menuItemServerSettings.Click += new System.EventHandler(this.menuItemServerSettings_Click);
             // 
+            // menuItemAutoRestart
+            // 
             this.menuItemAutoRestart.Index = 4;
             this.menuItemAutoRestart.Text = "Enable Autorestart";
             this.menuItemAutoRestart.Click += new System.EventHandler(this.AutorestartClick);
-
+            // 
+            // menuItemEAServerMode
+            // 
+            this.menuItemEAServerMode.Index = 5;
+            this.menuItemEAServerMode.Text = "EA Server Mode";
+            // 
+            // menuItemUPNPAttempt
+            // 
+            this.menuItemUPNPAttempt.Index = 6;
+            this.menuItemUPNPAttempt.Text = "UPnP Port-Forward";
+            // 
             // menuItemEdit
             // 
             this.menuItemEdit.Index = 1;

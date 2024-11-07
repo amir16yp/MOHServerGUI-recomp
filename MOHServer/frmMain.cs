@@ -20,7 +20,7 @@ namespace MOHServer
 	// Token: 0x0200000B RID: 11
 	public partial class frmMain : Form
 	{
-        public static ServerLogHandler m_logHandler = new ServerLogHandler();
+		public static ServerLogHandler m_logHandler = new ServerLogHandler();
 
 		public frmMain()
 		{
@@ -36,7 +36,7 @@ namespace MOHServer
 			this.m_statsFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.LastAccess;
 			this.m_statsFileWatcher.Changed += this.StatsChanged;
 			this.m_statsFileWatcher.EnableRaisingEvents = true;
-            this.m_statsUpdateThreadExec = new ThreadStart(this.UpdateStats);
+			this.m_statsUpdateThreadExec = new ThreadStart(this.UpdateStats);
 			this.m_statsUpdateInvoker = new frmMain.StatsUpdateDelegate(this.BindStatsToDataGrid);
 			this.m_selectedMaps = new ArrayList();
 			this.LoadSettings();
@@ -44,10 +44,34 @@ namespace MOHServer
 
 		}
 
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing && this.btnStop.Enabled)
+			{
+				// If server is running, minimize instead of close
+				e.Cancel = true;
+				this.WindowState = FormWindowState.Minimized;
+				return;
+			}
+
+			// Original closing logic
+			if (this.m_processStarter != null)
+			{
+				this.m_processStarter.CancelAndWait();
+			}
+
+			if (m_logHandler != null)
+			{
+				m_logHandler.Dispose();
+			}
+
+			this.SaveSettings();
+		}
 
 
-        // Token: 0x06000066 RID: 102 RVA: 0x00005F7C File Offset: 0x00004F7C
-        [STAThread]
+
+		// Token: 0x06000066 RID: 102 RVA: 0x00005F7C File Offset: 0x00004F7C
+		[STAThread]
 		private static void Main()
 		{
 			Application.Run(new frmMain());
@@ -146,22 +170,22 @@ namespace MOHServer
 			return fontStyle;
 		}
 
-        // Token: 0x0600006C RID: 108 RVA: 0x000061E0 File Offset: 0x000051E0
-        private void WriteStreamInfo(string text, Color c, FontStyle style)
-        {
-            this.txtLog.Focus();
-            this.txtLog.AppendText("[ " + DateTime.Now.ToString("T") + " ] ");
-            this.txtLog.SelectionColor = c;
-            this.txtLog.SelectionFont = new Font(this.txtLog.Font.FontFamily, this.txtLog.Font.Size, style);
-            this.txtLog.AppendText(text + "\r\n");
-            this.txtLog.ScrollToCaret();
+		// Token: 0x0600006C RID: 108 RVA: 0x000061E0 File Offset: 0x000051E0
+		private void WriteStreamInfo(string text, Color c, FontStyle style)
+		{
+			this.txtLog.Focus();
+			this.txtLog.AppendText("[ " + DateTime.Now.ToString("T") + " ] ");
+			this.txtLog.SelectionColor = c;
+			this.txtLog.SelectionFont = new Font(this.txtLog.Font.FontFamily, this.txtLog.Font.Size, style);
+			this.txtLog.AppendText(text + "\r\n");
+			this.txtLog.ScrollToCaret();
 
-            // Add file logging
-            m_logHandler.LogMessage(text, c, style);
-        }
+			// Add file logging
+			m_logHandler.LogMessage(text, c, style);
+		}
 
-        // Token: 0x0600006D RID: 109 RVA: 0x00006284 File Offset: 0x00005284
-        private void WriteOutStreamInfo(object sender, DataReceivedEventArgs e)
+		// Token: 0x0600006D RID: 109 RVA: 0x00006284 File Offset: 0x00005284
+		private void WriteOutStreamInfo(object sender, DataReceivedEventArgs e)
 		{
 			Color textColorFromText = this.GetTextColorFromText(e.Text);
 			FontStyle textStyleFromText = this.GetTextStyleFromText(e.Text);
@@ -189,26 +213,26 @@ namespace MOHServer
 			this.notifyIcon.Text = Database.GetString("CMN_Title");
 		}
 
-        // Token: 0x06000070 RID: 112 RVA: 0x0000634C File Offset: 0x0000534C
-        private void ProcessCompleted(object sender, EventArgs e)
-        {
-            this.WriteStreamInfo(Database.GetString("CMN_ServerExited"), Color.Green, FontStyle.Italic);
+		// Token: 0x06000070 RID: 112 RVA: 0x0000634C File Offset: 0x0000534C
+		private void ProcessCompleted(object sender, EventArgs e)
+		{
+			this.WriteStreamInfo(Database.GetString("CMN_ServerExited"), Color.Green, FontStyle.Italic);
 
-            if (this.m_autoRestart)
-            {
-                this.WriteStreamInfo("AUTO_RESTART enabled - Restarting server...", Color.Green, FontStyle.Italic);
-                // Small delay before restart to prevent rapid cycling if there's an immediate crash
-                Thread.Sleep(5000);
-                this.StartServer();
-            }
-            else
-            {
-                this.ProcessCompletedOrCancelled();
-            }
-        }
+			if (this.m_autoRestart)
+			{
+				this.WriteStreamInfo("AUTO_RESTART enabled - Restarting server...", Color.Green, FontStyle.Italic);
+				// Small delay before restart to prevent rapid cycling if there's an immediate crash
+				Thread.Sleep(5000);
+				this.StartServer();
+			}
+			else
+			{
+				this.ProcessCompletedOrCancelled();
+			}
+		}
 
-        // Token: 0x06000071 RID: 113 RVA: 0x00006378 File Offset: 0x00005378
-        private void ProcessCancelled(object sender, EventArgs e)
+		// Token: 0x06000071 RID: 113 RVA: 0x00006378 File Offset: 0x00005378
+		private void ProcessCancelled(object sender, EventArgs e)
 		{
 			this.WriteStreamInfo(Database.GetString("CMN_ServerStopped"), Color.Green, FontStyle.Italic);
 			this.ProcessCompletedOrCancelled();
@@ -221,77 +245,77 @@ namespace MOHServer
 			this.ProcessCompletedOrCancelled();
 		}
 
-        // Token: 0x06000073 RID: 115 RVA: 0x000063E0 File Offset: 0x000053E0
-        private void BuildArguments(out string args)
-        {
-            // Build the actual arguments
-            args = "-name:" + this.m_accountName;
-            args = args + " -pwd:" + this.m_accountPassword;
-            args = args + " -port:" + this.m_port;
-            args += " -logging";
-            if (this.m_isAdministrated)
-            {
-                args = args + " -adminPwd:" + this.m_adminPassword;
-            }
-            args = args + " -gname:" + this.m_gameName;
-            if (this.m_isRanked)
-            {
-                args += " -ranked";
-            }
-            if (this.m_isPasswordProtected)
-            {
-                args = args + " -gpwd:" + this.m_gamePassword;
-            }
-            string text = args;
-            string text2 = " -ff:";
-            int friendlyFire = (int)this.m_friendlyFire;
-            args = text + text2 + friendlyFire.ToString();
-            if (this.m_aimAssist == frmGameCreation.AimAssistType.Enabled)
-            {
-                args += " -aa";
-            }
-            args = args + " -maxPlayers:" + this.m_maxPlayers;
-            args += " -mapList:";
-            foreach (object obj in this.m_selectedMaps)
-            {
-                int num = (int)obj;
-                args = args + num.ToString() + ",";
-            }
-            args = args + " -rounds:" + this.m_roundsPerMap;
-            args = args + " -DMLimit:" + this.m_DMLimit;
-            args = args + " -INFLimit:" + this.m_INFLimit;
-            args = args + " -HTLLimit:" + this.m_HTLLimit;
-            args = args + " -BLLimit:" + this.m_BLLimit;
-            if (this.m_roundTime != -1)
-            {
-                args = args + " -timeLimit:" + this.m_roundTime;
-            }
-            args += " -skipporttest";
-            if (this.m_easerver)
-            {
-                args += " -easerver";
-            }
+		// Token: 0x06000073 RID: 115 RVA: 0x000063E0 File Offset: 0x000053E0
+		private void BuildArguments(out string args)
+		{
+			// Build the actual arguments
+			args = "-name:" + this.m_accountName;
+			args = args + " -pwd:" + this.m_accountPassword;
+			args = args + " -port:" + this.m_port;
+			args += " -logging";
+			if (this.m_isAdministrated)
+			{
+				args = args + " -adminPwd:" + this.m_adminPassword;
+			}
+			args = args + " -gname:" + this.m_gameName;
+			if (this.m_isRanked)
+			{
+				args += " -ranked";
+			}
+			if (this.m_isPasswordProtected)
+			{
+				args = args + " -gpwd:" + this.m_gamePassword;
+			}
+			string text = args;
+			string text2 = " -ff:";
+			int friendlyFire = (int)this.m_friendlyFire;
+			args = text + text2 + friendlyFire.ToString();
+			if (this.m_aimAssist == frmGameCreation.AimAssistType.Enabled)
+			{
+				args += " -aa";
+			}
+			args = args + " -maxPlayers:" + this.m_maxPlayers;
+			args += " -mapList:";
+			foreach (object obj in this.m_selectedMaps)
+			{
+				int num = (int)obj;
+				args = args + num.ToString() + ",";
+			}
+			args = args + " -rounds:" + this.m_roundsPerMap;
+			args = args + " -DMLimit:" + this.m_DMLimit;
+			args = args + " -INFLimit:" + this.m_INFLimit;
+			args = args + " -HTLLimit:" + this.m_HTLLimit;
+			args = args + " -BLLimit:" + this.m_BLLimit;
+			if (this.m_roundTime != -1)
+			{
+				args = args + " -timeLimit:" + this.m_roundTime;
+			}
+			args += " -skipporttest";
+			if (this.m_easerver)
+			{
+				args += " -easerver";
+			}
 
-            // Create censored version for logging
-            string censoredArgs = args;
-            // Censor account password
-            censoredArgs = censoredArgs.Replace("-pwd:" + this.m_accountPassword, "-pwd:****");
-            // Censor admin password if present
-            if (this.m_isAdministrated)
-            {
-                censoredArgs = censoredArgs.Replace("-adminPwd:" + this.m_adminPassword, "-adminPwd:****");
-            }
-            // Censor game password if present
-            if (this.m_isPasswordProtected)
-            {
-                censoredArgs = censoredArgs.Replace("-gpwd:" + this.m_gamePassword, "-gpwd:****");
-            }
+			// Create censored version for logging
+			string censoredArgs = args;
+			// Censor account password
+			censoredArgs = censoredArgs.Replace("-pwd:" + this.m_accountPassword, "-pwd:****");
+			// Censor admin password if present
+			if (this.m_isAdministrated)
+			{
+				censoredArgs = censoredArgs.Replace("-adminPwd:" + this.m_adminPassword, "-adminPwd:****");
+			}
+			// Censor game password if present
+			if (this.m_isPasswordProtected)
+			{
+				censoredArgs = censoredArgs.Replace("-gpwd:" + this.m_gamePassword, "-gpwd:****");
+			}
 
-            WriteStreamInfo("mohz.exe " + censoredArgs, Color.DarkGreen, FontStyle.Bold);
-        }
+			WriteStreamInfo("mohz.exe " + censoredArgs, Color.DarkGreen, FontStyle.Bold);
+		}
 
-        // Token: 0x06000074 RID: 116 RVA: 0x000065FC File Offset: 0x000055FC
-        private void SaveSettings()
+		// Token: 0x06000074 RID: 116 RVA: 0x000065FC File Offset: 0x000055FC
+		private void SaveSettings()
 		{
 			try
 			{
@@ -325,9 +349,9 @@ namespace MOHServer
 				xmlTextWriter.WriteElementString("port", this.m_port.ToString());
 				xmlTextWriter.WriteElementString("accountname", this.m_accountName);
 				xmlTextWriter.WriteElementString("accountpassword", this.m_accountPassword);
-                xmlTextWriter.WriteElementString("autorestart", this.m_autoRestart.ToString());
-                xmlTextWriter.WriteElementString("easerver", this.m_easerver.ToString());
-                xmlTextWriter.WriteEndElement();
+				xmlTextWriter.WriteElementString("autorestart", this.m_autoRestart.ToString());
+				xmlTextWriter.WriteElementString("easerver", this.m_easerver.ToString());
+				xmlTextWriter.WriteEndElement();
 				xmlTextWriter.Close();
 			}
 			catch
@@ -369,14 +393,14 @@ namespace MOHServer
 				this.m_port = int.Parse(dataRow["port"].ToString());
 				this.m_accountName = dataRow["accountname"].ToString();
 				this.m_accountPassword = dataRow["accountpassword"].ToString();
-                if (dataRow.Table.Columns.Contains("autorestart"))
-                {
-                    this.m_autoRestart = bool.Parse(dataRow["autorestart"].ToString());
-                }
-                else
-                {
-                    this.m_autoRestart = false;
-                }
+				if (dataRow.Table.Columns.Contains("autorestart"))
+				{
+					this.m_autoRestart = bool.Parse(dataRow["autorestart"].ToString());
+				}
+				else
+				{
+					this.m_autoRestart = false;
+				}
 				if (dataRow.Table.Columns.Contains("easerver"))
 				{
 					this.m_easerver = bool.Parse(dataRow["easerver"].ToString());
@@ -387,7 +411,7 @@ namespace MOHServer
 				}
 				this.menuItemAutoRestart.Checked = m_autoRestart;
 				this.menuItemEAServerMode.Checked = m_easerver;
-            }
+			}
 			catch
 			{
 				this.ResetSettings();
@@ -420,59 +444,60 @@ namespace MOHServer
 		}
 
 
-        private void StartServer()
-        {
-            this.Cursor = Cursors.AppStarting;
-            this.btnStop.Cursor = Cursors.Default;
-            this.btnGo.Enabled = false;
-            this.btnStop.Enabled = true;
-            this.menuItemSettings.Enabled = false;
+		private void StartServer()
+		{
+			this.Cursor = Cursors.AppStarting;
+			this.btnStop.Cursor = Cursors.Default;
+			this.btnGo.Enabled = false;
+			this.btnStop.Enabled = true;
+			this.menuItemSettings.Enabled = false;
 
-            if (this.txtLog.Text.Length > 50000)
-            {
-                this.txtLog.Clear(); // Prevent memory issues from log growing too large
-            }
+			if (this.txtLog.Text.Length > 50000)
+			{
+				this.txtLog.Clear(); // Prevent memory issues from log growing too large
+			}
 
-            this.WriteStreamInfo(Database.GetString("CMN_StartingServer"), Color.Green, FontStyle.Italic);
-            this.m_processStarter = new ProcessStarter(this);
-            this.m_processStarter.FileName = this.ServerPath + "mohz.exe";
-            this.BuildArguments(out this.m_processStarter.Arguments);
-            this.m_processStarter.WorkingDirectory = this.ServerPath;
-            this.m_processStarter.StdOutReceived += this.WriteOutStreamInfo;
-            this.m_processStarter.StdErrReceived += this.WriteErrStreamInfo;
-            this.m_processStarter.Completed += this.ProcessCompleted;
-            this.m_processStarter.Cancelled += this.ProcessCancelled;
-            this.m_processStarter.Failed += this.ProcessFailed;
-            this.m_processStarter.Start();
-            this.notifyIcon.Text = Database.GetString("CMN_TitleRunning");
-        }
+			this.WriteStreamInfo(Database.GetString("CMN_StartingServer"), Color.Green, FontStyle.Italic);
+			this.m_processStarter = new ProcessStarter(this);
+			this.m_processStarter.FileName = this.ServerPath + "mohz.exe";
+			this.BuildArguments(out this.m_processStarter.Arguments);
+			this.m_processStarter.WorkingDirectory = this.ServerPath;
+			this.m_processStarter.StdOutReceived += this.WriteOutStreamInfo;
+			this.m_processStarter.StdErrReceived += this.WriteErrStreamInfo;
+			this.m_processStarter.Completed += this.ProcessCompleted;
+			this.m_processStarter.Cancelled += this.ProcessCancelled;
+			this.m_processStarter.Failed += this.ProcessFailed;
+			this.m_processStarter.Start();
+			this.notifyIcon.Text = Database.GetString("CMN_TitleRunning");
+			this.notifyIcon.Icon = this.Icon;
+		}
 
 
 
-        // Token: 0x06000077 RID: 119 RVA: 0x00006C00 File Offset: 0x00005C00
-        private void btnGo_Click(object sender, EventArgs e)
-        {
-            this.m_startingGame = true;
-            if (this.m_accountName == "" || this.m_accountPassword == "")
-            {
-                this.menuItemAcctSettings_Click(sender, e);
-            }
-            if (this.m_startingGame)
-            {
-                this.menuItemGameSettings_Click(sender, e);
-                if (this.m_startingGame)
-                {
-                    this.menuItemMapList_Click(sender, e);
-                    if (this.m_startingGame)
-                    {
-                        this.StartServer();
-                    }
-                }
-            }
-        }
+		// Token: 0x06000077 RID: 119 RVA: 0x00006C00 File Offset: 0x00005C00
+		private void btnGo_Click(object sender, EventArgs e)
+		{
+			this.m_startingGame = true;
+			if (this.m_accountName == "" || this.m_accountPassword == "")
+			{
+				this.menuItemAcctSettings_Click(sender, e);
+			}
+			if (this.m_startingGame)
+			{
+				this.menuItemGameSettings_Click(sender, e);
+				if (this.m_startingGame)
+				{
+					this.menuItemMapList_Click(sender, e);
+					if (this.m_startingGame)
+					{
+						this.StartServer();
+					}
+				}
+			}
+		}
 
-        // Token: 0x06000078 RID: 120 RVA: 0x00006DB0 File Offset: 0x00005DB0
-        private void btnStop_Click(object sender, EventArgs e)
+		// Token: 0x06000078 RID: 120 RVA: 0x00006DB0 File Offset: 0x00005DB0
+		private void btnStop_Click(object sender, EventArgs e)
 		{
 			if (this.m_processStarter != null)
 			{
@@ -489,12 +514,12 @@ namespace MOHServer
 				this.m_processStarter.CancelAndWait();
 			}
 
-            if (m_logHandler != null)
-            {
-                m_logHandler.Dispose();
-            }
+			if (m_logHandler != null)
+			{
+				m_logHandler.Dispose();
+			}
 
-            this.SaveSettings();
+			this.SaveSettings();
 		}
 
 		// Token: 0x0600007A RID: 122 RVA: 0x00006E10 File Offset: 0x00005E10
@@ -609,45 +634,72 @@ namespace MOHServer
 			}
 		}
 
-		// Token: 0x06000080 RID: 128 RVA: 0x00007174 File Offset: 0x00006174
-		private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        // Token: 0x06000080 RID: 128 RVA: 0x00007174 File Offset: 0x00006174
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            RestoreFromTray();
+        }
+        private void RestoreFromTray()
+        {
+            base.Show();
+            base.WindowState = FormWindowState.Normal;
+            base.Activate();
+            this.notifyIcon.Visible = false;
+        }
+
+        // Token: 0x06000081 RID: 129 RVA: 0x000071AC File Offset: 0x000061AC
+        private void menuItemCntxtShow_Click(object sender, EventArgs e)
+        {
+            RestoreFromTray();
+        }
+
+
+        // Token: 0x06000082 RID: 130 RVA: 0x000071D8 File Offset: 0x000061D8
+        private void menuItemCntxtExit_Click(object sender, EventArgs e)
 		{
-			if (base.WindowState == FormWindowState.Minimized)
+			// If server is running, show confirmation dialog
+			if (this.btnStop.Enabled)
 			{
-				base.Show();
-				base.WindowState = FormWindowState.Normal;
-				base.Activate();
-				this.notifyIcon.Visible = false;
+				DialogResult result = MessageBox.Show(
+					"The server is still running. Are you sure you want to exit?",
+					Database.GetString("CMN_Title"),
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Warning);
+
+				if (result == DialogResult.No)
+				{
+					return;
+				}
 			}
-		}
 
-		// Token: 0x06000081 RID: 129 RVA: 0x000071AC File Offset: 0x000061AC
-		private void menuItemCntxtShow_Click(object sender, EventArgs e)
-		{
-			base.Show();
-			base.WindowState = FormWindowState.Normal;
-			base.Activate();
-			this.notifyIcon.Visible = false;
-		}
-
-		// Token: 0x06000082 RID: 130 RVA: 0x000071D8 File Offset: 0x000061D8
-		private void menuItemCntxtExit_Click(object sender, EventArgs e)
-		{
 			base.Close();
 		}
 
-		// Token: 0x06000083 RID: 131 RVA: 0x000071EC File Offset: 0x000061EC
-		private void frmMain_Resize(object sender, EventArgs e)
-		{
-			if (FormWindowState.Minimized == base.WindowState)
-			{
-				base.Hide();
-				this.notifyIcon.Visible = true;
-			}
-		}
 
-		// Token: 0x06000084 RID: 132 RVA: 0x00007214 File Offset: 0x00006214
-		private void frmMain_Load(object sender, EventArgs e)
+
+    // Token: 0x06000083 RID: 131 RVA: 0x000071EC File Offset: 0x000061EC
+    private void frmMain_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == base.WindowState)
+            {
+                // Only hide if the server is running
+                if (this.btnStop.Enabled)
+                {
+                    base.Hide();
+                    this.notifyIcon.Visible = true;
+
+                    // Optional: Show balloon tip
+                    this.notifyIcon.ShowBalloonTip(2000,
+                        Database.GetString("CMN_Title"),
+                        "Server is still running in the background. Double-click to restore.",
+                        ToolTipIcon.Info);
+                }
+            }
+        }
+
+
+        // Token: 0x06000084 RID: 132 RVA: 0x00007214 File Offset: 0x00006214
+        private void frmMain_Load(object sender, EventArgs e)
 		{
 			this.UpdateStats();
 		}
@@ -673,6 +725,9 @@ namespace MOHServer
 				}
 			}
 		}
+
+
+
 
 		// Token: 0x0400003E RID: 62
 		private const string ServerExe = "mohz.exe";
