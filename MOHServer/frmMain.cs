@@ -184,16 +184,28 @@ namespace MOHServer
 			m_logHandler.LogMessage(text, c, style);
 		}
 
-		// Token: 0x0600006D RID: 109 RVA: 0x00006284 File Offset: 0x00005284
-		private void WriteOutStreamInfo(object sender, DataReceivedEventArgs e)
-		{
-			Color textColorFromText = this.GetTextColorFromText(e.Text);
-			FontStyle textStyleFromText = this.GetTextStyleFromText(e.Text);
-			this.WriteStreamInfo(e.Text, textColorFromText, textStyleFromText);
-		}
+        // Token: 0x0600006D RID: 109 RVA: 0x00006284 File Offset: 0x00005284
+        private void WriteOutStreamInfo(object sender, DataReceivedEventArgs e)
+        {
+            Color textColorFromText = this.GetTextColorFromText(e.Text);
+            FontStyle textStyleFromText = this.GetTextStyleFromText(e.Text);
+            var match = System.Text.RegularExpressions.Regex.Match(e.Text, @"\b\d{3}\b");
 
-		// Token: 0x0600006E RID: 110 RVA: 0x000062BC File Offset: 0x000052BC
-		private void WriteErrStreamInfo(object sender, DataReceivedEventArgs e)
+            string text = e.Text;
+            if (match.Success)
+            {
+                string mapName = Database.GetString("MAP_" + match.Value);
+                if (!string.IsNullOrEmpty(mapName))
+                {
+                    text = e.Text + " (" + mapName + ")";
+                }
+            }
+
+            this.WriteStreamInfo(text, textColorFromText, textStyleFromText);
+        }
+
+        // Token: 0x0600006E RID: 110 RVA: 0x000062BC File Offset: 0x000052BC
+        private void WriteErrStreamInfo(object sender, DataReceivedEventArgs e)
 		{
 			if (e.Text.StartsWith("Press CTRL-C "))
 			{
