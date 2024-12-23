@@ -90,8 +90,8 @@
 			this.txtBoxGameName.Validating += new global::System.ComponentModel.CancelEventHandler(this.txtBoxGameName_Validating);
 			this.txtBoxGameName.Validated += new global::System.EventHandler(this.txtBoxGameName_Validated);
 			this.errorProviderGameCreation.ContainerControl = this;
-			this.errorProviderGameCreation.Icon = (global::System.Drawing.Icon)resourceManager.GetObject("errorProviderGameCreation.Icon");
-			this.chkBoxRanked.Checked = true;
+			//this.errorProviderGameCreation.Icon = Icon = (global::System.Drawing.Icon)resourceManager.GetObject("$this.Icon");
+            this.chkBoxRanked.Checked = true;
 			this.chkBoxRanked.CheckState = global::System.Windows.Forms.CheckState.Checked;
 			this.chkBoxRanked.ImeMode = global::System.Windows.Forms.ImeMode.NoControl;
 			this.chkBoxRanked.Location = new global::System.Drawing.Point(16, 24);

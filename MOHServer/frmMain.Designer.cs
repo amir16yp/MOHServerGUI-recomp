@@ -7,6 +7,9 @@ namespace MOHServer
 	// Token: 0x0200000B RID: 11
 	public partial class frmMain : global::System.Windows.Forms.Form
 	{
+
+
+
 		// Token: 0x06000064 RID: 100 RVA: 0x000052AC File Offset: 0x000042AC
 		protected override void Dispose(bool disposing)
 		{
@@ -348,7 +351,7 @@ namespace MOHServer
             this.MaximizeBox = false;
             this.Menu = this.mainMenu;
             this.Name = "frmMain";
-            this.Text = "$CMN_Title";
+            this.Text = " ";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.frmMain_Closing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Resize += new System.EventHandler(this.frmMain_Resize);

@@ -402,14 +402,16 @@ namespace MOHServer
 			}
 		}
 
-		// Token: 0x06000055 RID: 85 RVA: 0x00004F00 File Offset: 0x00003F00
-		private bool IsCharValidForGameName(char c)
-		{
-			return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '\b';
-		}
+        // Token: 0x06000055 RID: 85 RVA: 0x00004F00 File Offset: 0x00003F00
+        private bool IsCharValidForGameName(char c)
+        {
+            bool isCommonValid = ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || c == '\b';
+            return frmMain.isPatched ? isCommonValid || c == '[' || c == ']' || c == ' ' : isCommonValid;
+        }
 
-		// Token: 0x06000056 RID: 86 RVA: 0x00004F34 File Offset: 0x00003F34
-		private void txtBoxGameName_KeyPress(object sender, KeyPressEventArgs e)
+
+        // Token: 0x06000056 RID: 86 RVA: 0x00004F34 File Offset: 0x00003F34
+        private void txtBoxGameName_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			bool flag = this.IsCharValidForGameName(e.KeyChar);
 			e.Handled = !flag;

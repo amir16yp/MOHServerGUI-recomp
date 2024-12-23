@@ -20,8 +20,11 @@ namespace MOHServer
 	// Token: 0x0200000B RID: 11
 	public partial class frmMain : Form
 	{
+        private MohzPatcher m_patcher;
+        private MenuItem menuItemPatchStatus;
+		private MenuItem patchButton;
 		public static ServerLogHandler m_logHandler = new ServerLogHandler();
-
+		public static bool isPatched;
 		public frmMain()
 		{
 			this.InitializeComponent();
@@ -42,9 +45,55 @@ namespace MOHServer
 			this.LoadSettings();
 			this.m_startingGame = false;
 
-		}
+            m_patcher = new MohzPatcher(this);
+            menuItemPatchStatus = new MenuItem("Server Status");
+            menuItemPatchStatus.Enabled = false;
+			UpdatePatchStatus();
+            mainMenu.MenuItems.Add(menuItemPatchStatus);
+			patchButton = new MenuItem();
+			patchButton.Enabled = true;
+			patchButton.Text = "Patch server EXE";
+            patchButton.Click += PatchButton_Click;
+            menuItemSettings.MenuItems.Add(patchButton);
 
-		protected override void OnFormClosing(FormClosingEventArgs e)
+        }
+
+        private void PatchButton_Click(object sender, EventArgs e)
+        {
+            if (btnStop.Enabled)
+            {
+                MessageBox.Show("Please stop the server before patching.", "Server Running",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                "This will patch the server executable. Continue?",
+                "Confirm Patch",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                m_patcher.PatchMohzExecutable();
+            }
+        }
+
+        public void UpdatePatchStatus()
+        {
+            isPatched = m_patcher.IsMohzPatched();
+            menuItemPatchStatus.Text = isPatched ?
+                "Server Status: PATCHED" :
+                "Server Status: DEFAULT";
+			if (!File.Exists(Path.Combine(ServerPath, ServerExe))) {
+				WriteStreamInfo("SYSTEM: server executable not found. please make sure you've installed the full MOHH package.", Color.Red, FontStyle.Bold);
+				return;
+			}
+            WriteStreamInfo($"SYSTEM: Server executable is {(isPatched ? "patched" : "unmodified")}",
+                Color.DarkGreen, FontStyle.Regular);
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (e.CloseReason == CloseReason.UserClosing && this.btnStop.Enabled)
 			{
@@ -171,7 +220,7 @@ namespace MOHServer
 		}
 
 		// Token: 0x0600006C RID: 108 RVA: 0x000061E0 File Offset: 0x000051E0
-		private void WriteStreamInfo(string text, Color c, FontStyle style)
+		public void WriteStreamInfo(string text, Color c, FontStyle style)
 		{
 			this.txtLog.Focus();
 			this.txtLog.AppendText("[ " + DateTime.Now.ToString("T") + " ] ");
@@ -484,12 +533,10 @@ namespace MOHServer
 			this.notifyIcon.Icon = this.Icon;
 		}
 
-
-
-		// Token: 0x06000077 RID: 119 RVA: 0x00006C00 File Offset: 0x00005C00
-		private void btnGo_Click(object sender, EventArgs e)
+        // Token: 0x06000077 RID: 119 RVA: 0x00006C00 File Offset: 0x00005C00
+        private void btnGo_Click(object sender, EventArgs e)
 		{
-			this.m_startingGame = true;
+			 this.m_startingGame = true;
 			if (this.m_accountName == "" || this.m_accountPassword == "")
 			{
 				this.menuItemAcctSettings_Click(sender, e);
@@ -754,7 +801,7 @@ namespace MOHServer
 		private const string SettingsXml = "settings.xml";
 
 		// Token: 0x04000042 RID: 66
-		private readonly string ServerPath = AppDomain.CurrentDomain.BaseDirectory;
+		public readonly string ServerPath = AppDomain.CurrentDomain.BaseDirectory;
 
 		// Token: 0x04000043 RID: 67
 		private bool m_startingGame;
