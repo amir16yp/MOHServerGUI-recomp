@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
@@ -11,7 +11,7 @@ namespace MOHServer
     {
         private readonly frmMain mainForm;
         private const string EXPECTED_MD5 = "27AC7D9C0AB6811814F4E6AF864F2D21";
-        private const string PATCHED_MD5 = "FDB7693C55DAAF628291CF5A0AAE5A0D";
+        private const string PATCHED_MD5 = "B40944552CF36F55AA2425A2421C2B17";
         private const long IMAGE_BASE = 0x00400000;
 
         private class PatchOperation
@@ -148,6 +148,7 @@ namespace MOHServer
                 var patches = new List<PatchOperation>
                 {
                     new PatchOperation { Address = 0x0060AF90, Original = 0x74, New = 0x75 }, // Illegal character in server name patch
+                    new PatchOperation { Address = 0x006ea181, Original = 0x74, New = 0x75} // Dont use SSL patch
                 };
 
                 if (ApplyPatches(mohzPath, patchedPath, patches))
