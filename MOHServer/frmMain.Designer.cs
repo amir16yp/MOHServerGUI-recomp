@@ -178,11 +178,13 @@ namespace MOHServer
             // 
             this.menuItemEAServerMode.Index = 5;
             this.menuItemEAServerMode.Text = "EA Server Mode";
+            this.menuItemEAServerMode.Click += new System.EventHandler(this.menuItemEAServerMode_Click_1);
             // 
             // menuItemUPNPAttempt
             // 
             this.menuItemUPNPAttempt.Index = 6;
             this.menuItemUPNPAttempt.Text = "UPnP Port-Forward";
+            this.menuItemUPNPAttempt.Click += new System.EventHandler(this.menuItemUPNPAttempt_Click);
             // 
             // menuItemEdit
             // 

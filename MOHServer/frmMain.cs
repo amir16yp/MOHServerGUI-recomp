@@ -886,5 +886,16 @@ namespace MOHServer
         // Token: 0x0200000C RID: 12
         // (Invoke) Token: 0x06000087 RID: 135
         private delegate void StatsUpdateDelegate(DataSet dataSet, DataView dataView);
-	}
+
+        private void menuItemUPNPAttempt_Click(object sender, EventArgs e)
+        {
+			AttemptUPNP(sender, e);
+        }
+
+        private void menuItemEAServerMode_Click_1(object sender, EventArgs e)
+        {
+            this.m_easerver = !m_easerver;
+            this.menuItemEAServerMode.Checked = m_easerver;
+        }
+    }
 }
